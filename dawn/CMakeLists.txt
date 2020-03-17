@@ -38,6 +38,7 @@ unset(__DAWN_VERSION)
 #     In any case, Dawn objects are built as position independent code to allow
 #     building a shared library for python bindings.
 # - CMAKE_PREFIX_PATH<String>: Semi-colon separated path to dependencies.
+# - CMAKE_BUILD_TYPE<String>: The build type [ Release | RelWithDebInfo | Debug | Coverage ]
 
 # Other options
 option(BUILD_EXAMPLES "Build examples" ON)
@@ -102,6 +103,9 @@ add_cxx_compiler_flag_if_supported("-pedantic" DAWN_CXX_FLAGS)
 add_cxx_compiler_flag_if_supported("-Wno-unused-parameter" DAWN_CXX_FLAGS)
 add_cxx_compiler_flag_if_supported("-Wno-sign-compare" DAWN_CXX_FLAGS) # Would like to remove
 add_cxx_compiler_flag_if_supported("-Wl,--unresolved-symbols=report-all" DAWN_LINKER_FLAGS)
+if(CMAKE_BUILD_TYPE MATCHES COVERAGE)
+  include(CoverageFlags)
+endif()
 
 # Code coverage -- compiler flag
 if(DAWN_CODE_COVERAGE)

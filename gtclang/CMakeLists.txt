@@ -35,6 +35,7 @@ unset(__GTCLANG_VERSION)
 # - BUILD_TESTING<Bool>: Build test target (if only project, otherwise use GTCLANG_BUILD_TESTING to override).
 # - BUILD_SHARED_LIBS<Bool>: Build gtclang shared libraries instead of static. If true, requires dependencies to be built as position independent code
 # - CMAKE_PREFIX_PATH<String>: Semi-colon separated path to dependencies.
+# - CMAKE_BUILD_TYPE<String>: The build type [ Release | RelWithDebInfo | Debug | Coverage ]
 
 # Other options
 include(CMakeDependentOption)
@@ -92,6 +93,9 @@ add_cxx_compiler_flag_if_supported("-pedantic" GTCLANG_CXX_FLAGS)
 add_cxx_compiler_flag_if_supported("-Wno-unused-parameter" GTCLANG_CXX_FLAGS)
 add_cxx_compiler_flag_if_supported("-Wno-sign-compare" GTCLANG_CXX_FLAGS) # Would like to remove
 add_cxx_compiler_flag_if_supported("-Wl,--unresolved-symbols=report-all" GTCLANG_LINKER_FLAGS)
+if(CMAKE_BUILD_TYPE MATCHES COVERAGE)
+  include(CoverageFlags)
+endif()
 
 # Target properties
 set(GTCLANG_TARGET_PROPERTIES CXX_EXTENSIONS OFF)
