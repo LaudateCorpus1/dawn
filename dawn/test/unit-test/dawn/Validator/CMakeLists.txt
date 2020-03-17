@@ -14,7 +14,7 @@
 include(GoogleTest)
 
 set(executable ${PROJECT_NAME}UnittestValidator)
-add_executable(${executable}
+dawn_add_executable(${executable}
   TestUnstructuredDimensionChecker.cpp
   TestGridTypeChecker.cpp
   TestIntegrityChecker.cpp

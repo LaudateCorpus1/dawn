@@ -4,7 +4,7 @@ project(laplacian_driver LANGUAGES CXX)
 find_package(Dawn REQUIRED)
 find_package(GridTools 1.0.4 REQUIRED)
 
-add_executable(laplacian_driver laplacian_driver.cpp)
+dawn_add_executable(laplacian_driver laplacian_driver.cpp)
 target_compile_features(laplacian_driver PUBLIC cxx_std_11)
 target_compile_definitions(laplacian_driver PRIVATE BACKEND_MC)
 target_include_directories(laplacian_driver

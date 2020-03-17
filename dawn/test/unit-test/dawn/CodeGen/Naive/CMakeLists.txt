@@ -14,7 +14,7 @@
 include(GoogleTest)
 
 set(executable ${PROJECT_NAME}UnittestCodeGenNaive)
-add_executable(${executable} TestCodeGenNaive.cpp)
+dawn_add_executable(${executable} TestCodeGenNaive.cpp)
 target_add_dawn_standard_props(${executable})
 target_link_libraries(${executable} DawnOptimizer DawnCompiler DawnUnittest gtest gtest_main)
 gtest_discover_tests(${executable} TEST_PREFIX "Dawn::Unit::CodeGen::Naive::" DISCOVERY_TIMEOUT 30)

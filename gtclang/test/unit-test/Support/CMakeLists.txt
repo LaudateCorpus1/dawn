@@ -16,7 +16,7 @@
 include(GoogleTest)
 
 set(test_name ${PROJECT_NAME}UnittestSupport)
-add_executable(${test_name}
+dawn_add_executable(${test_name}
   TestStringUtil.cpp
   TestMain.cpp
 )

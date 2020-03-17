@@ -14,7 +14,7 @@
 include(GoogleTest)
 
 set(executable ${PROJECT_NAME}IntegrationTestOptimizerFromSIR)
-add_executable(${executable}
+dawn_add_executable(${executable}
   TestMain.cpp
   TestComputeMaximumExtent.cpp
   TestMultiStage.cpp

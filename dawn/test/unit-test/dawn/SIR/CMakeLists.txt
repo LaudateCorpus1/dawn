@@ -14,7 +14,7 @@
 include(GoogleTest)
 
 set(executable ${PROJECT_NAME}UnittestSIR)
-add_executable(${executable}
+dawn_add_executable(${executable}
   TestAST.cpp
   TestASTVisitor.cpp
   TestSIR.cpp

@@ -14,7 +14,7 @@
 include(GoogleTest)
 
 set(executable ${PROJECT_NAME}UnittestOptimizer)
-add_executable(${executable}
+dawn_add_executable(${executable}
   TestMain.cpp
   TestPassCaching.cpp
   TestPassComputeStageExtents.cpp

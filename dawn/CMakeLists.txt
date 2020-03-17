@@ -44,6 +44,7 @@ option(BUILD_EXAMPLES "Build examples" ON)
 option(DAWN_BUILD_TESTING "Override BUILD_TESTING if part of a multi-project build." OFF)
 option(DAWN_BUILD_EXAMPLES "Override BUILD_EXAMPLES if part of a multi-project build." OFF)
 option(DAWN_REQUIRE_PYTHON "Require enabling python." OFF)
+option(DAWN_CODE_COVERAGE "Enable code coverage reporting. Use this with CMAKE_BUILD_TYPE=Debug." OFF)
 set(PROTOBUF_PYTHON_MODULE_DIR "" CACHE PATH "Path to protobuf python module. Use this if CMake is not finding the module.")
 set(DAWN4PY_MODULE_DIR "${PROJECT_SOURCE_DIR}/src" CACHE PATH "Path to dawn4py python module being built. Change this to self.build_lib for pip out-of-source builds.")
 mark_as_advanced(PROTOBUF_PYTHON_MODULE_DIR DAWN4PY_MODULE_DIR)
@@ -102,6 +103,20 @@ add_cxx_compiler_flag_if_supported("-Wno-unused-parameter" DAWN_CXX_FLAGS)
 add_cxx_compiler_flag_if_supported("-Wno-sign-compare" DAWN_CXX_FLAGS) # Would like to remove
 add_cxx_compiler_flag_if_supported("-Wl,--unresolved-symbols=report-all" DAWN_LINKER_FLAGS)
 
+# Code coverage -- compiler flag
+if(DAWN_CODE_COVERAGE)
+  if (NOT CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    message(FATAL "Code coverage implementation is only supported for g++")
+  endif()
+  set(coverage_flag "--coverage")
+  list(APPEND DAWN_CXX_FLAGS ${coverage_flag})
+  list(APPEND DAWN_LINKER_FLAGS ${coverage_flag})
+
+  string(REPLACE "." ";" _gcc_version ${CMAKE_CXX_COMPILER_VERSION})
+  list(GET __gcc_version 0 _gcc_major_version)
+  find_program(GCOV_EXECUTABLE NAMES gcov-${_gcc_major_version} gcov)
+endif()
+
 # Target properties
 set(DAWN_TARGET_PROPERTIES CXX_EXTENSIONS OFF)
 
@@ -122,7 +137,23 @@ function(target_add_dawn_standard_props target)
   )
   target_compile_features(${target} PUBLIC cxx_std_17)
   target_compile_options(${target} PRIVATE ${DAWN_CXX_FLAGS})
+  target_link_options(${target} PRIVATE ${DAWN_LINKER_FLAGS})
   set_target_properties(${target} PROPERTIES ${DAWN_TARGET_PROPERTIES})
+endfunction()
+
+function(dawn_add_executable target sources)
+  add_executable(${target} ${sources})
+
+  # Code Coverage
+  foreach(source ${sources})
+    add_custom_command(OUTPUT ${source}.gcov
+      COMMAND ${GCOV_EXECUTABLE} ${source}.gcno > /dev/null
+      DEPENDS ${target} ${source}.gcno
+    )
+    list(APPEND _gcov_files ${source}.gcov)
+  endforeach()
+  add_custom_target(${target}-gcov DEPENDS ${_gcov_files})
+	add_dependencies(gcov ${target}-gcov)
 endfunction()
 
 # Protobuf

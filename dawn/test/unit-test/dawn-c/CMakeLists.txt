@@ -14,7 +14,7 @@
 include(GoogleTest)
 
 set(executable ${PROJECT_NAME}CUnittest)
-add_executable(${executable}
+dawn_add_executable(${executable}
   TestOptions.cpp
   TestCompiler.cpp
 )

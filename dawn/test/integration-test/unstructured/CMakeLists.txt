@@ -49,7 +49,7 @@ if(eckit_FOUND AND atlas_FOUND)
   list(TRANSFORM reference_stencil_codes PREPEND reference/)
 
   # Compile the executable that will programatically construct an IIR and code-generate it to file
-  add_executable(AtlasIntegrationTestCodeGenerate GenerateUnstructuredStencils.cpp)
+  dawn_add_executable(AtlasIntegrationTestCodeGenerate GenerateUnstructuredStencils.cpp)
   target_link_libraries(AtlasIntegrationTestCodeGenerate Dawn DawnUnittest)
 
   add_custom_command(
@@ -68,7 +68,7 @@ if(eckit_FOUND AND atlas_FOUND)
   add_custom_target(AtlasIntegrationTestCopyReferences ALL SOURCES ${reference_stencil_codes})
 
   set(test_name AtlasIntegrationTestCompareOutput)
-  add_executable(${test_name}
+  dawn_add_executable(${test_name}
     AtlasIntegrationTestCompareOutput.cpp
     AtlasVerifier.h
     AtlasCartesianWrapper.h

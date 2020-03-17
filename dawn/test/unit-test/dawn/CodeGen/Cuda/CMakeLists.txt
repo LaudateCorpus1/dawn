@@ -14,7 +14,7 @@
 include(GoogleTest)
 
 set(executable ${PROJECT_NAME}UnittestCodeGenCuda)
-add_executable(${executable} TestCodeGenCuda.cpp)
+dawn_add_executable(${executable} TestCodeGenCuda.cpp)
 target_add_dawn_standard_props(${executable})
 target_link_libraries(${executable} DawnUnittest gtest gtest_main)
 gtest_discover_tests(${executable} TEST_PREFIX "Dawn::Unit::CodeGen::Cuda::" DISCOVERY_TIMEOUT 30)

@@ -13,7 +13,7 @@
 ##===------------------------------------------------------------------------------------------===##
 include(GoogleTest)
 
-add_executable(${PROJECT_NAME}IntegrationTest
+dawn_add_executable(${PROJECT_NAME}IntegrationTest
   TestIIRDeserializer.cpp
   GenerateInMemoryStencils.cpp
 )
@@ -23,7 +23,7 @@ set_target_properties(${PROJECT_NAME}IntegrationTest PROPERTIES
   RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 gtest_discover_tests(${PROJECT_NAME}IntegrationTest TEST_PREFIX "Dawn::Integration::" DISCOVERY_TIMEOUT 30)
 
-add_executable(DawnUpdateIIRReferences
+dawn_add_executable(DawnUpdateIIRReferences
   RegenerateIIRMain.cpp
   GenerateInMemoryStencils.cpp
 )

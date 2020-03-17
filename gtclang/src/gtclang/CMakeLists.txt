@@ -49,7 +49,7 @@ if(${PROJECT_NAME}_TESTING)
   add_subdirectory(Unittest)
 endif()
 
-add_executable(gtclang Driver/gtclang.cpp)
+dawn_add_executable(gtclang Driver/gtclang.cpp)
 set_target_properties(gtclang PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 install(
   TARGETS gtclang
@@ -63,7 +63,7 @@ target_link_libraries(gtclang GTClang)
 
 include(FetchCxxopts)
 
-add_executable(gtc-parse gtc-parse.cpp)
+dawn_add_executable(gtc-parse gtc-parse.cpp)
 target_link_libraries(gtc-parse GTClang cxxopts)
 set_target_properties(gtc-parse PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 install(

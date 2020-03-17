@@ -1,7 +1,7 @@
 include(GoogleTest)
 
 set(executable ${PROJECT_NAME}DriverIncludesUnittest)
-add_executable(${executable}
+dawn_add_executable(${executable}
   TestExtent.cpp
 )
 

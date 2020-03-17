@@ -63,7 +63,7 @@ function(compile_target)
   set(executable ${test}_${backend}_test)
   set(sources ${test}_benchmark.cpp TestMain.cpp Options.cpp)
 
-  add_executable(${executable} ${sources})
+  dawn_add_executable(${executable} ${sources})
   add_dependencies(${executable} CodeGen_${test}_${backend}_codegen CodeGen_${test}_c++-naive_codegen)
   target_include_directories(${executable} PRIVATE
     #TODO Dawn should export this as a target
@@ -102,7 +102,7 @@ function(compile_target_cuda)
   set(executable ${test}_${backend}_cuda_test)
   set(sources ${test}_benchmark.cu TestMain.cpp Options.cpp)
 
-  add_executable(${executable} ${sources})
+  dawn_add_executable(${executable} ${sources})
   add_dependencies(${executable}
     CodeGen_${test}_${backend}_codegen CodeGen_${test}_c++-naive_codegen)
 
